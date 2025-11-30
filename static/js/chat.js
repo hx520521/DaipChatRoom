@@ -71,7 +71,7 @@ socket.on('movie_message', (data) => {
 
 // 接收AI消息
 socket.on('ai_message', (data) => {
-    displayAIMessage(data.nickname, data.message, data.reply);
+    displayAIMessage(data.nickname, data.message, data.reply, data.is_typing);
 });
 
 // 更新在线用户列表
@@ -162,26 +162,91 @@ function displayMovieMessage(nickname, url, original_url) {
 }
 
 // 显示AI消息
-function displayAIMessage(nickname, message, reply) {
-    const messageDiv = document.createElement('div');
-    messageDiv.classList.add('message', 'ai');
+function displayAIMessage(nickname, message, reply, is_typing = false) {
+    // 添加调试日志
+    console.log('displayAIMessage called with:', { nickname, message, reply, is_typing });
     
-    const now = new Date();
-    const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    // 检查输入参数是否有效
+    if (!nickname || !message) {
+        console.error('Invalid AI message parameters:', { nickname, message, reply });
+        return;
+    }
     
-    messageDiv.innerHTML = `
-        <div class="message-header">
-            <span class="message-nickname">${nickname} [AI对话]</span>
-            <span class="message-time">${time}</span>
-        </div>
-        <div class="message-content">
-            <strong>问:</strong> ${escapeHtml(message)}<br>
-            <strong>答:</strong> ${escapeHtml(reply)}
-        </div>
-    `;
+    // 查找是否已存在此消息的容器
+    let messageDiv = null;
+    const existingMessages = document.querySelectorAll('.message.ai');
     
-    chatMessages.appendChild(messageDiv);
+    // 尝试找到相同用户和问题的消息
+    for (let msg of existingMessages) {
+        const content = msg.querySelector('.message-content');
+        if (content) {
+            const questionContainer = content.querySelector('.ai-question');
+            if (questionContainer) {
+                const questionText = questionContainer.textContent.replace('问:', '').trim();
+                const escapedMessage = escapeHtml(message);
+                if (questionText.includes(escapedMessage) || questionContainer.innerHTML.includes(escapedMessage)) {
+                    messageDiv = msg;
+                    console.log('Found existing message:', messageDiv);
+                    break;
+                }
+            }
+        }
+    }
+    
+    // 如果不存在，则创建新的消息容器
+    if (!messageDiv) {
+        console.log('Creating new message container');
+        messageDiv = document.createElement('div');
+        messageDiv.classList.add('message', 'ai');
+        
+        const now = new Date();
+        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        messageDiv.innerHTML = `
+            <div class="message-header">
+                <span class="message-nickname">${nickname} [AI对话]</span>
+                <span class="message-time">${time}</span>
+            </div>
+            <div class="message-content">
+                <div class="ai-question">
+                    <strong>问:</strong> ${escapeHtml(message)}
+                </div>
+                <div class="ai-answer">
+                    <strong>答:</strong> <span class="ai-reply">${escapeHtml(reply)}</span>
+                    <span class="typing-indicator" style="display: none;">...</span>
+                </div>
+            </div>
+        `;
+        
+        chatMessages.appendChild(messageDiv);
+        console.log('Added new message to chatMessages');
+    } else {
+        // 更新现有消息的回复内容
+        const aiReplyElement = messageDiv.querySelector('.ai-reply');
+        if (aiReplyElement) {
+            aiReplyElement.textContent = reply;
+            console.log('Updated existing message reply:', reply);
+        } else {
+            console.error('Could not find ai-reply element in existing message');
+        }
+    }
+    
+    // 处理打字状态
+    const typingIndicator = messageDiv.querySelector('.typing-indicator');
+    if (typingIndicator) {
+        if (is_typing) {
+            typingIndicator.style.display = 'inline';
+            console.log('Set typing indicator to visible');
+        } else {
+            typingIndicator.style.display = 'none';
+            console.log('Set typing indicator to hidden');
+        }
+    } else {
+        console.error('Could not find typing-indicator element');
+    }
+    
     scrollToBottom();
+    console.log('displayAIMessage completed');
 }
 
 // 更新用户列表
@@ -251,6 +316,20 @@ document.addEventListener('click', (e) => {
     }
 });
 
+// 自动调整输入框大小
+function adjustTextareaHeight() {
+    // 设置最小高度
+    messageInput.style.height = 'auto';
+    
+    // 计算所需高度
+    const textHeight = messageInput.scrollHeight;
+    const minHeight = parseInt(window.getComputedStyle(messageInput).minHeight);
+    const maxHeight = parseInt(window.getComputedStyle(messageInput).maxHeight);
+    
+    // 设置合适的高度
+    messageInput.style.height = Math.min(Math.max(textHeight, minHeight), maxHeight) + 'px';
+}
+
 // 页面加载完成后初始化
 document.addEventListener('DOMContentLoaded', () => {
     // 自动获取焦点
@@ -258,4 +337,25 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 初始化Emoji选择器
     initEmojiPicker();
+    
+    // 添加输入框事件监听
+    messageInput.addEventListener('input', adjustTextareaHeight);
+    messageInput.addEventListener('paste', adjustTextareaHeight);
+    messageInput.addEventListener('change', adjustTextareaHeight);
+    
+    // 添加功能按钮事件监听
+    const aiBtn = document.getElementById('aiBtn');
+    const movieBtn = document.getElementById('movieBtn');
+    
+    aiBtn.addEventListener('click', () => {
+        messageInput.value = '@川小农 ';
+        messageInput.focus();
+        adjustTextareaHeight();
+    });
+    
+    movieBtn.addEventListener('click', () => {
+        messageInput.value = '@电影 ';
+        messageInput.focus();
+        adjustTextareaHeight();
+    });
 });

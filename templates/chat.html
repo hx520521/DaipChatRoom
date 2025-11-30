@@ -34,6 +34,12 @@
         
         <!-- 底部消息输入区域 -->
         <footer class="chat-footer">
+            <!-- 功能通道 -->
+            <div class="feature-channel">
+                <button id="aiBtn" class="feature-btn">@川小农 🤖</button>
+                <button id="movieBtn" class="feature-btn">@电影 🎬</button>
+            </div>
+            
             <div class="emoji-picker-container">
                 <button id="emojiBtn" class="emoji-btn">😊</button>
                 <div id="emojiPicker" class="emoji-picker">
@@ -42,7 +48,7 @@
                     </div>
                 </div>
             </div>
-            <input type="text" id="messageInput" placeholder="输入消息... (@电影+链接 播放电影, @川小农 与AI对话)" autocomplete="off">
+            <textarea id="messageInput" placeholder="输入消息..." autocomplete="off" rows="1"></textarea>
             <button id="sendBtn">发送</button>
         </footer>
     </div>

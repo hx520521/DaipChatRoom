@@ -215,6 +215,32 @@ body {
     border: 1px solid rgba(76, 175, 80, 0.2);
 }
 
+.message.ai .message-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ai-question {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid #667eea;
+}
+
+.ai-answer {
+    background-color: rgba(76, 175, 80, 0.15);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border-left: 3px solid #4caf50;
+}
+
+.ai-question strong,
+.ai-answer strong {
+    font-weight: 600;
+    color: #333;
+}
+
 .message.movie {
     background-color: rgba(255, 152, 0, 0.1);
     color: #ef6c00;
@@ -252,9 +278,9 @@ body {
 /* 底部消息输入区域 */
 .chat-footer {
     display: flex;
-    padding: 15px 20px;
-    background-color: #f8f9fa;
-    border-top: 1px solid #e9ecef;
+    padding: 50px 20px 10px;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
     align-items: center;
     position: relative;
 }
@@ -278,6 +304,40 @@ body {
 
 .emoji-btn:hover {
     background-color: #f0f0f0;
+}
+
+/* 功能通道 */
+.feature-channel {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 5px;
+    background-color: #f8f9fa;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.feature-btn {
+    padding: 8px 15px;
+    background-color: #fff;
+    color: #495057;
+    border: 1px solid #dee2e6;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.feature-btn:hover {
+    background-color: #667eea;
+    color: #fff;
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(102, 126, 234, 0.3);
 }
 
 /* Emoji选择器 */
@@ -328,8 +388,13 @@ body {
     border-radius: 25px;
     font-size: 14px;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, height 0.3s ease;
     margin-right: 10px;
+    min-height: 40px;
+    max-height: 120px;
+    overflow-y: auto;
+    resize: none;
+    box-sizing: border-box;
 }
 
 #messageInput:focus {
