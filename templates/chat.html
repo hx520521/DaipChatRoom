@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DaiP智能聊天室</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="chat-container">
+        <!-- 顶部导航栏 -->
+        <header class="chat-header">
+            <h1>DaiP智能聊天室</h1>
+            <a href="{{ url_for('logout') }}" class="logout-btn">退出</a>
+        </header>
+        
+        <!-- 主要内容区域 -->
+        <main class="chat-main">
+            <!-- 左侧在线用户列表 -->
+            <aside class="chat-sidebar">
+                <div class="sidebar-header">
+                    <h3>在线用户 (0)</h3>
+                </div>
+                <ul class="users-list" id="usersList">
+                    <!-- 用户列表将通过JavaScript动态生成 -->
+                </ul>
+            </aside>
+            
+            <!-- 右侧聊天消息区域 -->
+            <div class="chat-messages" id="chatMessages">
+                <!-- 聊天消息将通过JavaScript动态生成 -->
+            </div>
+        </main>
+        
+        <!-- 底部消息输入区域 -->
+        <footer class="chat-footer">
+            <div class="emoji-picker-container">
+                <button id="emojiBtn" class="emoji-btn">😊</button>
+                <div id="emojiPicker" class="emoji-picker">
+                    <div class="emoji-grid">
+                        <!-- Emoji将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+            </div>
+            <input type="text" id="messageInput" placeholder="输入消息... (@电影+链接 播放电影, @川小农 与AI对话)" autocomplete="off">
+            <button id="sendBtn">发送</button>
+        </footer>
+    </div>
+    
+    <!-- WebSocket连接和消息处理 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
