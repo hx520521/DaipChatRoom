@@ -11,7 +11,11 @@
         <!-- 顶部导航栏 -->
         <header class="chat-header">
             <h1>DaiP智能聊天室</h1>
-            <a href="{{ url_for('logout') }}" class="logout-btn">退出</a>
+            <div class="header-actions">
+                <button id="historyBtn" class="history-btn">历史记录</button>
+                <button id="clearHistoryBtn" class="clear-history-btn">删除历史</button>
+                <a href="{{ url_for('logout') }}" class="logout-btn">退出</a>
+            </div>
         </header>
         
         <!-- 主要内容区域 -->
@@ -38,6 +42,9 @@
             <div class="feature-channel">
                 <button id="aiBtn" class="feature-btn">@川小农 🤖</button>
                 <button id="movieBtn" class="feature-btn">@电影 🎬</button>
+                <button id="weatherBtn" class="feature-btn">@查天气 ☀️</button>
+                <button id="musicBtn" class="feature-btn">@听音乐 🎵</button>
+                <button id="newsBtn" class="feature-btn">@查新闻 📰</button>
             </div>
             
             <div class="emoji-picker-container">

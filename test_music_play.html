@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音乐播放测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .music-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+        }
+        .music-cover {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .music-info {
+            margin: 10px 0;
+        }
+        .music-title {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+        .music-artist {
+            margin: 0 0 3px 0;
+            color: #666;
+        }
+        .music-album {
+            margin: 0;
+            color: #999;
+            font-size: 14px;
+        }
+        .music-player {
+            margin-top: 15px;
+        }
+        audio {
+            width: 100%;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>音乐播放功能测试</h1>
+    
+    <div id="music-container">
+        <h2>测试歌曲：小幸运 - 田馥甄</h2>
+        <div class="music-card">
+            <img src="" alt="专辑封面" class="music-cover" id="cover">
+            <div class="music-info">
+                <h4 class="music-title" id="title">小幸运</h4>
+                <p class="music-artist" id="artist">田馥甄</p>
+                <p class="music-album" id="album">小幸运</p>
+            </div>
+            <div class="music-player">
+                <audio id="test-audio" controls>
+                   </audio>
+            </div>
+        </div>
+    </div>
+    
+    <div>
+        <h2>测试按钮</h2>
+        <button onclick="testAudioPlayback()">测试音频播放</button>
+        <button onclick="loadTestMusic()">加载测试音乐</button>
+    </div>
+    
+    <script>
+        // 测试音乐数据（模拟API返回）
+        const testMusicData = {
+            "image": "",
+            "singer": "田馥甄",
+            "song": "小幸运(《我的少女时代》主题曲)",
+            "url": "http://ring.bssdlbig.kugou.com/18d1f2935a174c94708fc90fd9f64e37.mp3"
+        };
+        
+        function loadTestMusic() {
+            console.log("加载测试音乐数据...");
+            console.log("测试音乐数据:", testMusicData);
+            
+            // 更新页面显示
+            document.getElementById('cover').src = testMusicData.image || '';
+            document.getElementById('title').textContent = testMusicData.song || '未知歌曲';
+            document.getElementById('artist').textContent = testMusicData.singer || '未知歌手';
+            document.getElementById('album').textContent = testMusicData.song || '未知专辑';
+            
+            // 设置音频源
+            const audioElement = document.getElementById('test-audio');
+            audioElement.src = testMusicData.url;
+            audioElement.load();
+            
+            console.log("音频源已设置:", audioElement.src);
+            alert("测试音乐已加载，点击播放按钮测试");
+        }
+        
+        function testAudioPlayback() {
+            const audioElement = document.getElementById('test-audio');
+            
+            if (!audioElement.src) {
+                alert("请先加载测试音乐");
+                return;
+            }
+            
+            try {
+                audioElement.play()
+                    .then(() => {
+                        console.log("音频播放成功");
+                        alert("音频播放成功！");
+                    })
+                    .catch(error => {
+                        console.error("音频播放失败:", error);
+                        alert("音频播放失败: " + error.message);
+                    });
+            } catch (error) {
+                console.error("播放函数调用失败:", error);
+                alert("播放函数调用失败: " + error.message);
+            }
+        }
+        
+        // 页面加载完成后自动加载测试音乐
+        window.onload = function() {
+            loadTestMusic();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+[
+  {
+    "type": "system",
+    "data": "1 加入了聊天室"
+  },
+  {
+    "type": "system",
+    "data": "1 离开了聊天室"
+  },
+  {
+    "type": "system",
+    "data": "1 加入了聊天室"
+  },
+  {
+    "type": "system",
+    "data": "1 离开了聊天室"
+  },
+  {
+    "type": "system",
+    "data": "111 加入了聊天室"
+  },
+  {
+    "type": "system",
+    "data": "111 离开了聊天室"
+  },
+  {
+    "type": "system",
+    "data": "11 加入了聊天室"
+  }
+]

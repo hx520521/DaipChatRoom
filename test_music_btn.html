@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试@听音乐按钮</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-btn {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+        }
+        .test-btn:hover {
+            background-color: #0056b3;
+        }
+        #messageInput {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>测试@听音乐按钮功能</h1>
+        <p>点击下面的按钮，模拟在聊天界面点击@听音乐按钮的效果：</p>
+        
+        <button class="test-btn" onclick="testMusicBtn()">@听音乐 🎵</button>
+        
+        <h3>模拟输入框：</h3>
+        <textarea id="messageInput" placeholder="输入消息..." rows="2"></textarea>
+        
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function testMusicBtn() {
+            // 模拟@听音乐按钮的功能
+            const messageInput = document.getElementById('messageInput');
+            messageInput.value = '@听音乐 ';
+            messageInput.focus();
+            
+            // 显示测试结果
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<p><strong>✅ 测试结果：</strong></p>
+                <p>输入框内容已更新为："${messageInput.value}"</p>
+                <p>输入框已获得焦点</p>`;
+            resultDiv.style.backgroundColor = '#d4edda';
+        }
+    </script>
+</body>
+</html>

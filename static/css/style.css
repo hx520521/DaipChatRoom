@@ -112,6 +112,27 @@ body {
     font-weight: 500;
 }
 
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.history-btn {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 15px;
+    background-color: #2196F3;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.history-btn:hover {
+    background-color: #1976D2;
+}
+
 .logout-btn {
     color: #fff;
     text-decoration: none;
@@ -451,29 +472,273 @@ body {
     }
 }
 
+/* 音乐卡片样式 */
+.music-card {
+    background-color: #f0f8ff;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid #b0e0e6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.music-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.music-cover {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    object-fit: cover;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    background-color: #e0e0e0;
+}
+
+.music-info {
+    text-align: center;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.music-title {
+    margin: 0 0 8px 0;
+    color: #2c3e50;
+    font-size: 1.2em;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.music-artist {
+    margin: 0 0 5px 0;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.music-album {
+    margin: 0;
+    color: #888;
+    font-size: 0.85em;
+    font-style: italic;
+}
+
+.music-player {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.music-player audio {
+    width: 100%;
+    height: 35px;
+    margin-bottom: 10px;
+}
+
+.music-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.music-controls button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.play-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.pause-btn {
+    background-color: #ff9800;
+    color: white;
+}
+
+.stop-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+.music-controls button:hover {
+    opacity: 0.8;
+}
+
+/* 响应式设计 */
 @media (max-width: 480px) {
-    .login-box {
-        padding: 20px;
-        margin: 10px;
+    .chat-container {
+        height: 100vh;
+        border-radius: 0;
     }
     
-    .chat-header h1 {
-        font-size: 18px;
+    .chat-header {
+        padding: 10px;
+        font-size: 1.2em;
     }
     
     .chat-messages {
         padding: 10px;
     }
     
-    .chat-footer {
+    .message {
+        padding: 8px;
+        margin-bottom: 8px;
+    }
+    
+/* 新闻消息样式 */
+.news-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.news-item {
+    display: flex;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.news-item:hover {
+    background-color: #e9ecef;
+}
+
+.news-index {
+    font-weight: bold;
+    color: #667eea;
+    margin-right: 10px;
+    padding-top: 5px;
+    min-width: 25px;
+    text-align: center;
+}
+
+.news-info {
+    flex: 1;
+}
+
+.news-title {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.news-title a {
+    color: #333;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.news-title a:hover {
+    color: #667eea;
+    text-decoration: underline;
+}
+
+.news-desc {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.news-hot {
+    color: #ff6b6b;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.news-img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-left: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .news-img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .news-title {
+        font-size: 14px;
+    }
+    
+    .news-desc {
+        font-size: 13px;
+    }
+}
+
+    .chat-input {
         padding: 10px;
     }
     
     #messageInput {
-        padding: 10px;
+        width: 75%;
     }
     
     #sendBtn {
-        padding: 10px 20px;
+        width: 20%;
     }
+    
+    .music-controls {
+        flex-direction: column;
+    }
+    
+    .music-controls button {
+        width: 100%;
+    }
+}
+
+/* 天气背景样式 */
+.chat-container.weather-sunny {
+    background: linear-gradient(135deg, #87CEEB 0%, #98D8C8 100%);
+}
+
+.chat-container.weather-cloudy {
+    background: linear-gradient(135deg, #B0BEC5 0%, #CFD8DC 100%);
+}
+
+.chat-container.weather-rainy {
+    background: linear-gradient(135deg, #607D8B 0%, #78909C 100%);
+}
+
+.chat-container.weather-snowy {
+    background: linear-gradient(135deg, #ECEFF1 0%, #CFD8DC 100%);
+}
+
+.chat-container.weather-windy {
+    background: linear-gradient(135deg, #F5F5F5 0%, #E0E0E0 100%);
+}
+
+.chat-container.weather-foggy {
+    background: linear-gradient(135deg, #D7CCC8 0%, #EFEBE9 100%);
+}
+
+/* 天气背景下的聊天消息区域样式调整 */
+.chat-container.weather-sunny .chat-messages,
+.chat-container.weather-cloudy .chat-messages,
+.chat-container.weather-rainy .chat-messages,
+.chat-container.weather-snowy .chat-messages,
+.chat-container.weather-windy .chat-messages,
+.chat-container.weather-foggy .chat-messages {
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(5px);
 }
