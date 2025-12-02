@@ -1,16 +1,23 @@
 # DaiP智能聊天室
 
-一个基于Flask和Socket.IO的实时智能聊天室，支持视频播放、AI对话和用户管理功能。
+一个基于Flask和Socket.IO的实时智能聊天室，支持多种智能功能和完整的用户管理系统。
 
 ## 功能特性
 
+### 基础功能
 - ✅ **实时聊天**：基于WebSocket的即时消息传输
 - ✅ **用户管理**：完整的用户注册、登录和管理系统
 - ✅ **管理员功能**：用户列表查看、状态管理和权限控制
-- ✅ **视频播放**：支持@电影指令播放网络视频
-- ✅ **AI对话**：集成AI对话功能（@川小农）
 - ✅ **表情支持**：内置表情选择器
 - ✅ **响应式设计**：适配不同设备屏幕
+- ✅ **历史消息**：自动记录并支持查看历史聊天记录
+
+### 智能功能
+- ✅ **AI对话**：集成AI对话功能（@川小农）
+- ✅ **视频播放**：支持@电影指令播放网络视频
+- ✅ **天气查询**：支持@查天气指令查询城市天气
+- ✅ **音乐播放**：支持@听音乐指令搜索并播放音乐
+- ✅ **新闻查询**：支持@查新闻指令获取最新热点新闻
 
 ## 技术栈
 
@@ -20,6 +27,7 @@
 - **模板引擎**：Jinja2
 - **数据库**：SQLite
 - **依赖管理**：Python虚拟环境
+- **API集成**：天气API、音乐API、新闻API、AI API
 
 ## 安装与运行
 
@@ -43,7 +51,7 @@ venv\Scripts\activate
 source venv/bin/activate
 
 # 安装依赖
-pip install flask flask-socketio
+pip install flask flask-socketio requests
 ```
 
 ### 3. 运行应用
@@ -66,36 +74,54 @@ python app.py
 
 - 访问 http://localhost:5000/login
 - 输入用户名和密码
-- 点击登录按钮进入聊天室
+- 选择服务器并点击登录按钮进入聊天室
 
 ### 3. 发送消息
 
 - 在输入框中输入消息内容
 - 点击发送按钮或按Enter键发送消息
 
-### 4. 播放视频
-
-- 使用 `@电影` 指令加上视频链接
-- 例如：`@电影 https://example.com/video.mp4`
-- 系统将自动解析并在聊天中嵌入视频播放器
-
-### 5. AI对话
+### 4. AI对话
 
 - 使用 `@川小农` 指令加上对话内容
 - 例如：`@川小农 你好，今天天气怎么样？`
 - 系统将返回AI回复
 
-### 6. 使用表情
+### 5. 播放视频
+
+- 使用 `@电影` 指令加上视频链接
+- 例如：`@电影 https://example.com/video.mp4`
+- 系统将自动解析并在聊天中嵌入视频播放器
+
+### 6. 天气查询
+
+- 使用 `@查天气` 指令加上城市名称
+- 例如：`@查天气 北京`
+- 系统将返回该城市的天气信息
+
+### 7. 音乐播放
+
+- 使用 `@听音乐` 指令加上歌曲名称
+- 例如：`@听音乐 小幸运`
+- 系统将搜索并播放该歌曲
+
+### 8. 新闻查询
+
+- 使用 `@查新闻` 指令
+- 例如：`@查新闻`
+- 系统将返回最新的热点新闻列表
+
+### 9. 使用表情
 
 - 点击输入框左侧的😊按钮打开表情选择器
 - 点击表情即可插入到消息中
 
-### 7. 退出聊天室
+### 10. 退出聊天室
 
 - 点击页面右上角的退出按钮
 - 或直接关闭浏览器窗口
 
-### 8. 管理员功能
+### 11. 管理员功能
 
 - 登录管理员账户（用户名：admin，默认密码：admin123）
 - 点击用户列表按钮查看所有注册用户
@@ -147,28 +173,54 @@ DaipChatRoom/
 3. **样式**：在 `static/css/style.css` 中添加新的样式
 4. **模板**：根据需要修改 `templates/` 目录下的HTML模板
 
-### 视频播放解析
+### API集成说明
 
-当前使用的视频解析服务：
-```python
-parsed_url = f'http://jx.playerjy.com/?url={encoded_url}'
-```
+系统集成了多个外部API来实现智能功能：
 
-可以根据需要修改为其他视频解析服务。
+#### 天气API
+- 调用地址：https://v2.xxapi.cn/api/weather
+- 功能：根据城市名称查询天气信息
+- 使用方式：`@查天气 城市名称`
+
+#### 音乐API
+- 调用地址：https://v2.xxapi.cn/api/kugousearch
+- 功能：根据歌曲名称搜索并播放音乐
+- 使用方式：`@听音乐 歌曲名称`
+
+#### 新闻API
+- 调用地址：https://v2.xxapi.cn/api/baiduhot
+- 功能：获取最新热点新闻列表
+- 使用方式：`@查新闻`
+
+#### AI API
+- 调用地址：自定义AI服务接口
+- 功能：提供智能对话功能
+- 使用方式：`@川小农 对话内容`
 
 ### 数据库管理
 
-系统使用SQLite数据库存储用户信息，表结构如下：
+系统使用SQLite数据库存储用户信息和消息记录，表结构如下：
 
 ```sql
+-- 用户表
 CREATE TABLE users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
-    nickname TEXT,
     status TEXT DEFAULT 'offline',
-    is_admin INTEGER DEFAULT 0,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    is_admin INTEGER DEFAULT 0
+);
+
+-- 消息表
+CREATE TABLE IF NOT EXISTS messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    message_type TEXT NOT NULL, -- normal, ai, movie, system, weather, music, news
+    content TEXT NOT NULL,
+    additional_data TEXT, -- 存储AI回复、电影链接、天气数据等额外信息
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users (id)
 );
 ```
 
@@ -176,10 +228,11 @@ CREATE TABLE users (
 
 1. 确保已安装Python 3.6或更高版本
 2. 视频播放功能依赖外部解析服务，可能会受到网络限制
-3. AI对话功能需要确保相关服务可用
+3. 所有智能功能均依赖外部API，需要确保网络连接正常
 4. 首次运行时会自动创建数据库文件和表结构
 5. 管理员账户默认用户名：admin，密码：admin123
-6. 请勿在生产环境中使用默认的SECRET_KEY
+6. 请勿在生产环境中使用默认的SECRET_KEY和API密钥
+7. 部分API可能有调用次数限制，请合理使用
 
 ## 许可证
 
